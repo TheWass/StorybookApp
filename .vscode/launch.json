@@ -7,8 +7,8 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Open index.html",
-            "file": "/Users/alexhome/Projects/StorybookPWA/index.html"
+            "name": "Debug",
+            "file": "${workspaceFolder}/index.html"
         }
     ]
 }
