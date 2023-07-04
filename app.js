@@ -1,19 +1,19 @@
 // set up basic variables for app
 
-const record = document.querySelector('.record');
-const stop = document.querySelector('.stop');
+const recordBtn = document.querySelector('.record');
+const stopBtn = document.querySelector('.stop');
 const soundClips = document.querySelector('.sound-clips');
-const canvas = document.querySelector('.visualizer');
-const mainSection = document.querySelector('.main-controls');
+const visualizer = document.querySelector('.visualizer');
+const mainControls = document.querySelector('.main-controls');
 
 // disable stop button while not recording
 
-stop.disabled = true;
+stopBtn.disabled = true;
 
 // visualiser setup - create web audio api context and canvas
 
 let audioCtx;
-const canvasCtx = canvas.getContext("2d");
+const canvasCtx = visualizer.getContext("2d");
 
 //main block for doing the audio recording
 
@@ -28,26 +28,26 @@ if (navigator.mediaDevices.getUserMedia) {
 
     visualize(stream);
 
-    record.onclick = function() {
+    recordBtn.onclick = function() {
       mediaRecorder.start();
       console.log(mediaRecorder.state);
       console.log("recorder started");
-      record.style.background = "red";
+      recordBtn.style.background = "red";
 
-      stop.disabled = false;
-      record.disabled = true;
+      stopBtn.disabled = false;
+      recordBtn.disabled = true;
     }
 
-    stop.onclick = function() {
+    stopBtn.onclick = function() {
       mediaRecorder.stop();
       console.log(mediaRecorder.state);
       console.log("recorder stopped");
-      record.style.background = "";
-      record.style.color = "";
+      recordBtn.style.background = "";
+      recordBtn.style.color = "";
       // mediaRecorder.requestData();
 
-      stop.disabled = true;
-      record.disabled = false;
+      stopBtn.disabled = true;
+      recordBtn.disabled = false;
     }
 
     mediaRecorder.onstop = function(e) {
@@ -131,8 +131,8 @@ function visualize(stream) {
   draw()
 
   function draw() {
-    const WIDTH = canvas.width
-    const HEIGHT = canvas.height;
+    const WIDTH = visualizer.width
+    const HEIGHT = visualizer.height;
 
     requestAnimationFrame(draw);
 
@@ -164,14 +164,14 @@ function visualize(stream) {
       x += sliceWidth;
     }
 
-    canvasCtx.lineTo(canvas.width, canvas.height/2);
+    canvasCtx.lineTo(visualizer.width, visualizer.height/2);
     canvasCtx.stroke();
 
   }
 }
 
 window.onresize = function() {
-  canvas.width = mainSection.offsetWidth;
+  visualizer.width = mainControls.offsetWidth;
 }
 
 window.onresize();

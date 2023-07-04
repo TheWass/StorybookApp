@@ -1,0 +1,14 @@
+{
+    "short_name": "Storybook",
+    "name": "Storybook Project App",
+    "id": "/?source=pwa",
+    "start_url": "/?source=pwa",
+    "display": "standalone",
+    "scope": "/",
+    "icons": [
+        {
+            "src": "ELCLogo.png",
+            "sizes": "any"
+        }
+    ]
+}
