@@ -6,6 +6,11 @@ const soundClips = document.querySelector('.sound-clips');
 const visualizer = document.querySelector('.visualizer');
 const mainControls = document.querySelector('.main-controls');
 
+// Register service worker
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./service-worker.js');
+}
+
 // disable stop button while not recording
 
 stopBtn.disabled = true;
