@@ -34,7 +34,7 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-htmlVersion.innerHTML = "x.x.x";
+htmlVersion.innerHTML = '0.0.2';
 
 // The click event on the pop up notification
 document.getElementById('reload').addEventListener('click', function(){
