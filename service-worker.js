@@ -22,3 +22,9 @@ self.addEventListener('install', (e) => {
     await cache.addAll(contentToCache);
   })());
 });
+
+self.addEventListener('message', function (event) {
+  if (event.data.action === 'skipWaiting') {
+    self.skipWaiting();
+  }
+});

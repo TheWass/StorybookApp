@@ -111,6 +111,13 @@
     padding: 0.5rem 0.75rem;
     font-size: 0.8rem;
   }
+
+  #reload {
+    display: none;
+  }
+  #reload.show {
+    display: block;
+  }
   
   /* Checkbox hack to control information box display */
   

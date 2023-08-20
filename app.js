@@ -1,5 +1,4 @@
 // set up basic variables for app
-
 const recordBtn = document.querySelector('.record');
 const stopBtn = document.querySelector('.stop');
 const soundClips = document.querySelector('.sound-clips');
@@ -8,22 +7,48 @@ const mainControls = document.querySelector('.main-controls');
 const htmlVersion = document.getElementById('version');
 
 // Register service worker
+let newWorker;
+let refreshing;
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./service-worker.js');
+  navigator.serviceWorker.register('./service-worker.js').then(reg => {
+    // Register update found.
+    reg.addEventListener('updatefound', () => {
+      // An updated service worker has appeared in reg.installing!
+      newWorker = reg.installing;
+      newWorker.addEventListener('statechange', () => {
+        // Has service worker state changed?
+        if (newWorker.state == 'installed') {
+          // There is a new service worker available, show the notification
+          if (navigator.serviceWorker.controller) {
+            let notification = document.getElementById('notification');
+            notification.className = 'show';
+          }
+        }
+      });
+    });
+  });
+  navigator.serviceWorker.addEventListener('controllerchange', function () {
+    if (refreshing) return;
+    window.location.reload();
+    refreshing = true;
+  });
 }
-htmlVersion.innerHTML = version ?? "x.x.x";
+
+htmlVersion.innerHTML = "x.x.x";
+
+// The click event on the pop up notification
+document.getElementById('reload').addEventListener('click', function(){
+  newWorker.postMessage({ action: 'skipWaiting' });
+});
 
 // disable stop button while not recording
-
 stopBtn.disabled = true;
 
 // visualiser setup - create web audio api context and canvas
-
 let audioCtx;
 const canvasCtx = visualizer.getContext('2d');
 
 //main block for doing the audio recording
-
 if (navigator.mediaDevices.getUserMedia) {
   console.log('getUserMedia supported.');
 
