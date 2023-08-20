@@ -8,7 +8,7 @@ const mainControls = document.querySelector('.main-controls');
 
 // Register service worker
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./service-worker.js');
+  navigator.serviceWorker.register('./service-worker.js');
 }
 
 // disable stop button while not recording
@@ -18,7 +18,7 @@ stopBtn.disabled = true;
 // visualiser setup - create web audio api context and canvas
 
 let audioCtx;
-const canvasCtx = visualizer.getContext("2d");
+const canvasCtx = visualizer.getContext('2d');
 
 //main block for doing the audio recording
 
@@ -29,15 +29,15 @@ if (navigator.mediaDevices.getUserMedia) {
   let chunks = [];
 
   let onSuccess = function(stream) {
-    const mediaRecorder = new MediaRecorder(stream);
+    const mediaRecorder = new MediaRecorder(stream, {mimeType: 'audio/mp3'});
 
     visualize(stream);
 
     recordBtn.onclick = function() {
       mediaRecorder.start();
       console.log(mediaRecorder.state);
-      console.log("recorder started");
-      recordBtn.style.background = "red";
+      console.log('recorder started');
+      recordBtn.style.background = 'red';
 
       stopBtn.disabled = false;
       recordBtn.disabled = true;
@@ -46,9 +46,9 @@ if (navigator.mediaDevices.getUserMedia) {
     stopBtn.onclick = function() {
       mediaRecorder.stop();
       console.log(mediaRecorder.state);
-      console.log("recorder stopped");
-      recordBtn.style.background = "";
-      recordBtn.style.color = "";
+      console.log('recorder stopped');
+      recordBtn.style.background = '';
+      recordBtn.style.color = '';
       // mediaRecorder.requestData();
 
       stopBtn.disabled = true;
@@ -56,50 +56,52 @@ if (navigator.mediaDevices.getUserMedia) {
     }
 
     mediaRecorder.onstop = function(e) {
-      console.log("data available after MediaRecorder.stop() called.");
+      console.log('data available after MediaRecorder.stop() called.');
 
-      const clipName = prompt('Enter a name for your sound clip?','My unnamed clip');
+      const clipName = prompt('Enter a name for your sound clip?', 'clip');
 
       const clipContainer = document.createElement('article');
       const clipLabel = document.createElement('p');
       const audio = document.createElement('audio');
       const deleteButton = document.createElement('button');
+      const downloadButton = document.createElement('button');
 
       clipContainer.classList.add('clip');
       audio.setAttribute('controls', '');
       deleteButton.textContent = 'Delete';
       deleteButton.className = 'delete';
-
-      if(clipName === null) {
-        clipLabel.textContent = 'My unnamed clip';
-      } else {
-        clipLabel.textContent = clipName;
-      }
+      downloadButton.textContent = 'Download';
+      downloadButton.className = 'download';
+      clipLabel.textContent = clipName ?? 'clip';
 
       clipContainer.appendChild(audio);
       clipContainer.appendChild(clipLabel);
       clipContainer.appendChild(deleteButton);
+      clipContainer.appendChild(downloadButton);
       soundClips.appendChild(clipContainer);
 
       audio.controls = true;
-      const blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
+      const blob = new Blob(chunks, { 'type' : 'audio/mp3' });
       chunks = [];
       const audioURL = window.URL.createObjectURL(blob);
       audio.src = audioURL;
-      console.log("recorder stopped");
+      console.log('recorder stopped');
 
       deleteButton.onclick = function(e) {
-        e.target.closest(".clip").remove();
+        e.target.closest('.clip').remove();
+      }
+
+      downloadButton.onclick = function(e) {
+        const anchor = document.createElement('a');
+        anchor.href = audioURL;
+        anchor.download = `${clipLabel.textContent}.mp3`;
+        anchor.click();
       }
 
       clipLabel.onclick = function() {
         const existingName = clipLabel.textContent;
         const newClipName = prompt('Enter a new name for your sound clip?');
-        if(newClipName === null) {
-          clipLabel.textContent = existingName;
-        } else {
-          clipLabel.textContent = newClipName;
-        }
+        clipLabel.textContent = newClipName ?? existingName;
       }
     }
 
@@ -119,7 +121,7 @@ if (navigator.mediaDevices.getUserMedia) {
 }
 
 function visualize(stream) {
-  if(!audioCtx) {
+  if (!audioCtx) {
     audioCtx = new AudioContext();
   }
 
@@ -160,7 +162,7 @@ function visualize(stream) {
       let v = dataArray[i] / 128.0;
       let y = v * HEIGHT/2;
 
-      if(i === 0) {
+      if (i === 0) {
         canvasCtx.moveTo(x, y);
       } else {
         canvasCtx.lineTo(x, y);

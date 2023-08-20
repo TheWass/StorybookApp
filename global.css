@@ -105,6 +105,12 @@
     padding: 0.5rem 0.75rem;
     font-size: 0.8rem;
   }
+
+  button.download {
+    background: #66F;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+  }
   
   /* Checkbox hack to control information box display */
   
