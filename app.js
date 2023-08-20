@@ -5,11 +5,13 @@ const stopBtn = document.querySelector('.stop');
 const soundClips = document.querySelector('.sound-clips');
 const visualizer = document.querySelector('.visualizer');
 const mainControls = document.querySelector('.main-controls');
+const htmlVersion = document.getElementById('version');
 
 // Register service worker
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./service-worker.js');
 }
+htmlVersion.innerHTML = version ?? "x.x.x";
 
 // disable stop button while not recording
 
