@@ -20,8 +20,8 @@ if ('serviceWorker' in navigator) {
         if (newWorker.state == 'installed') {
           // There is a new service worker available, show the notification
           if (navigator.serviceWorker.controller) {
-            let notification = document.getElementById('notification');
-            notification.className = 'show';
+            let reload = document.getElementById('reload');
+            reload.className = 'show';
           }
         }
       });
