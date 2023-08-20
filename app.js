@@ -29,7 +29,7 @@ if (navigator.mediaDevices.getUserMedia) {
   let chunks = [];
 
   let onSuccess = function(stream) {
-    const mediaRecorder = new MediaRecorder(stream, {mimeType: 'audio/mp3'});
+    const mediaRecorder = new MediaRecorder(stream, {mimeType: 'video/mp4'});
 
     visualize(stream);
 
@@ -81,7 +81,7 @@ if (navigator.mediaDevices.getUserMedia) {
       soundClips.appendChild(clipContainer);
 
       audio.controls = true;
-      const blob = new Blob(chunks, { 'type' : 'audio/mp3' });
+      const blob = new Blob(chunks, { 'type' : 'video/mp4' });
       chunks = [];
       const audioURL = window.URL.createObjectURL(blob);
       audio.src = audioURL;
