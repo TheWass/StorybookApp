@@ -11,8 +11,10 @@ let newWorker;
 let refreshing;
 let version = '0.0.2';
 if ('serviceWorker' in navigator) {
+  console.log('Found ServiceWorker from App.')
   navigator.serviceWorker.register('./service-worker.js').then(reg => {
     // Register update found.
+    console.log('Registered ServiceWorker')
     reg.addEventListener('updatefound', () => {
       // An updated service worker has appeared in reg.installing!
       newWorker = reg.installing;
