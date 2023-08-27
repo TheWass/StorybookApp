@@ -4,11 +4,12 @@ const stopBtn = document.querySelector('.stop');
 const soundClips = document.querySelector('.sound-clips');
 const visualizer = document.querySelector('.visualizer');
 const mainControls = document.querySelector('.main-controls');
-const htmlVersion = document.getElementById('version');
-
+const elemVersion = document.getElementById('version');
+const elemMimeType = document.getElementById('mime-type');
 // Register service worker
 let newWorker;
 let refreshing;
+let version = '0.0.2';
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./service-worker.js').then(reg => {
     // Register update found.
@@ -34,7 +35,7 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-htmlVersion.innerHTML = '0.0.2';
+elemVersion.innerHTML = version;
 
 // The click event on the pop up notification
 document.getElementById('reload').addEventListener('click', function(){
@@ -66,7 +67,8 @@ if (navigator?.mediaDevices?.getUserMedia) {
     const defaultMime = { mimeType: 'audio/mpeg', fileType: 'mp3' };
 
     const { mimeType, fileType } = 'isTypeSupported' in MediaRecorder ? mimeTypes.find(isSupportedMimeType) ?? defaultMime : defaultMime;
-    console.log('Using mimetype', mimeType)
+    console.log('Using mimetype', mimeType);
+    elemMimeType.innerHTML = mimeType;
     const mediaRecorder = new MediaRecorder(stream, { mimeType });
 
     visualize(stream);
