@@ -6,6 +6,7 @@ const visualizer = document.querySelector('.visualizer');
 const mainControls = document.querySelector('.main-controls');
 const elemVersion = document.getElementById('version');
 const elemMimeType = document.getElementById('mime-type');
+elemVersion.innerHTML = 'Live';
 // Register service worker
 let newWorker;
 let refreshing;
