@@ -49,14 +49,25 @@ let audioCtx;
 const canvasCtx = visualizer.getContext('2d');
 
 //main block for doing the audio recording
-if (navigator.mediaDevices.getUserMedia) {
+if (navigator?.mediaDevices?.getUserMedia) {
   console.log('getUserMedia supported.');
 
-  const constraints = { audio: true };
+  const constraints = { audio: true, video: false };
   let chunks = [];
 
   let onSuccess = function(stream) {
-    const mediaRecorder = new MediaRecorder(stream, {mimeType: 'video/mp4'});
+    const mimeTypes = [
+      { mimeType: 'audio/mpeg', fileType: 'mp3' },
+      { mimeType: 'audio/mp4', fileType: 'mp4' },
+      { mimeType: 'audio/webm', fileType: 'webm' }
+    ];
+
+    const isSupportedMimeType = ({ mimeType }) => MediaRecorder.isTypeSupported(mimeType);
+    const defaultMime = { mimeType: 'audio/mpeg', fileType: 'mp3' };
+
+    const { mimeType, fileType } = 'isTypeSupported' in MediaRecorder ? mimeTypes.find(isSupportedMimeType) ?? defaultMime : defaultMime;
+    console.log('Using mimetype', mimeType)
+    const mediaRecorder = new MediaRecorder(stream, { mimeType });
 
     visualize(stream);
 
@@ -108,7 +119,7 @@ if (navigator.mediaDevices.getUserMedia) {
       soundClips.appendChild(clipContainer);
 
       audio.controls = true;
-      const blob = new Blob(chunks, { 'type' : 'video/mp4' });
+      const blob = new Blob(chunks, { type: mimeType });
       chunks = [];
       const audioURL = window.URL.createObjectURL(blob);
       audio.src = audioURL;
@@ -121,7 +132,7 @@ if (navigator.mediaDevices.getUserMedia) {
       downloadButton.onclick = function(e) {
         const anchor = document.createElement('a');
         anchor.href = audioURL;
-        anchor.download = `${clipLabel.textContent}.mp3`;
+        anchor.download = clipLabel.textContent + '.' + fileType;
         anchor.click();
       }
 
@@ -144,7 +155,7 @@ if (navigator.mediaDevices.getUserMedia) {
   navigator.mediaDevices.getUserMedia(constraints).then(onSuccess, onError);
 
 } else {
-   console.log('getUserMedia not supported on your browser!');
+   console.error('getUserMedia not supported on your browser!');
 }
 
 function visualize(stream) {
