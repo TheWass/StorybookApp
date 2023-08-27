@@ -13,10 +13,10 @@ const appShellFiles = [
 
 const contentToCache = appShellFiles;
 
-self.version = version;
 // Installing Service Worker
-self.addEventListener('install', (e) => {
+self.addEventListener('install', async (e) => {
   console.log('[Service Worker] Install version', version);
+
   e.waitUntil((async () => {
     const cache = await caches.open(cacheName);
     console.log('[Service Worker] Caching all: app shell and content');
@@ -24,8 +24,13 @@ self.addEventListener('install', (e) => {
   })());
 });
 
-self.addEventListener('message', function (event) {
+self.addEventListener('message', (event) => {
   if (event.data.action === 'skipWaiting') {
     self.skipWaiting();
   }
 });
+
+const broadcast = new BroadcastChannel('metadata');
+broadcast.onmessage = () => {
+  broadcast.postMessage({ action: 'version', version });
+};

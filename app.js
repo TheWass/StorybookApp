@@ -14,7 +14,8 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./service-worker.js').then(reg => {
     // Register update found.
     console.log('Registered ServiceWorker');
-    elemVersion.innerHTML = reg.version;
+    const channel = new BroadcastChannel('metadata');
+    channel.postMessage({});
     reg.addEventListener('updatefound', () => {
       console.log('ServiceWorker Update found!')
       // An updated service worker has appeared in reg.installing!
@@ -30,10 +31,17 @@ if ('serviceWorker' in navigator) {
       });
     });
   });
-  navigator.serviceWorker.addEventListener('controllerchange', function () {
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
     if (refreshing) return;
     window.location.reload();
     refreshing = true;
+  });
+
+  const channel = new BroadcastChannel('metadata');
+  channel.addEventListener('message', e => {
+    if (e.data.action === 'version') {
+      elemVersion.innerHTML = e.data.version
+    }
   });
 }
 
