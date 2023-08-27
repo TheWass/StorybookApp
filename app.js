@@ -9,17 +9,17 @@ const elemMimeType = document.getElementById('mime-type');
 // Register service worker
 let newWorker;
 let refreshing;
-let version = '0.0.3';
 if ('serviceWorker' in navigator) {
   console.log('Found ServiceWorker from App.')
   navigator.serviceWorker.register('./service-worker.js').then(reg => {
     // Register update found.
-    console.log('Registered ServiceWorker')
+    console.log('Registered ServiceWorker');
+    elemVersion.innerHTML = reg.version;
     reg.addEventListener('updatefound', () => {
+      console.log('ServiceWorker Update found!')
       // An updated service worker has appeared in reg.installing!
       newWorker = reg.installing;
       newWorker.addEventListener('statechange', () => {
-        // Has service worker state changed?
         if (newWorker.state == 'installed') {
           // There is a new service worker available, show the notification
           if (navigator.serviceWorker.controller) {
@@ -36,8 +36,6 @@ if ('serviceWorker' in navigator) {
     refreshing = true;
   });
 }
-
-elemVersion.innerHTML = version;
 
 // The click event on the pop up notification
 document.getElementById('reload').addEventListener('click', function(){

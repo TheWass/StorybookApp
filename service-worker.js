@@ -1,7 +1,7 @@
 
 // Files to cache
 const cacheName = 'storybook-v1';
-const version = '0.0.3'
+const version = '0.0.1'
 const appShellFiles = [
   '/',
   '/index.html',
@@ -13,6 +13,7 @@ const appShellFiles = [
 
 const contentToCache = appShellFiles;
 
+self.version = version;
 // Installing Service Worker
 self.addEventListener('install', (e) => {
   console.log('[Service Worker] Install version', version);
