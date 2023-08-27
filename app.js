@@ -58,8 +58,8 @@ if (navigator?.mediaDevices?.getUserMedia) {
   let onSuccess = function(stream) {
     const mimeTypes = [
       { mimeType: 'audio/mpeg', fileType: 'mp3' },
-      { mimeType: 'audio/mp4', fileType: 'mp4' },
-      { mimeType: 'audio/webm', fileType: 'webm' }
+      { mimeType: 'audio/mp4', fileType: 'mp4' }, // Apple, probably
+      { mimeType: 'audio/webm', fileType: 'webm' } // Android, probably
     ];
 
     const isSupportedMimeType = ({ mimeType }) => MediaRecorder.isTypeSupported(mimeType);

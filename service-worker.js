@@ -15,7 +15,8 @@ const contentToCache = appShellFiles;
 
 // Installing Service Worker
 self.addEventListener('install', (e) => {
-  console.log('[Service Worker] Install');
+  console.log('[Service Worker] Install version', version);
+  return; // skip caching
   e.waitUntil((async () => {
     const cache = await caches.open(cacheName);
     console.log('[Service Worker] Caching all: app shell and content');
