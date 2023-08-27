@@ -9,7 +9,7 @@ const elemMimeType = document.getElementById('mime-type');
 // Register service worker
 let newWorker;
 let refreshing;
-let version = '0.0.2';
+let version = '0.0.3';
 if ('serviceWorker' in navigator) {
   console.log('Found ServiceWorker from App.')
   navigator.serviceWorker.register('./service-worker.js').then(reg => {
