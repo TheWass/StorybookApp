@@ -25,8 +25,20 @@
     font-weight: normal;
     padding: 0.5rem 0 0 0;
   }
+
+  .d-none {
+    display: none;
+  }
+
+  .d-block {
+    display: block;
+  }
+
+  .d-flex {
+    display: flex;
+  }
   
-  .main-controls {
+  #recorder {
     padding: 0.5rem 0;
   }
   
@@ -35,13 +47,13 @@
     margin-bottom: 0.5rem;
   }
   
-  #buttons {
+  .buttons {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
   }
   
-  #buttons button {
+  .buttons button {
     font-size: 1rem;
     padding: 1rem;
     width: calc(50% - 0.25rem);
@@ -55,6 +67,18 @@
     border: none;
     transition: all 0.2s;
     padding: 0.5rem;
+  }
+
+  button.play {
+    background: #080;
+  }
+
+  button.stop {
+    background: #A00;
+  }
+
+  button.upload {
+    background: #66F;
   }
   
   button:hover, button:focus {
@@ -71,7 +95,7 @@
   /* Make the clips use as much space as possible, and
    * also show a scrollbar when there are too many clips to show
    * in the available space */
-  .sound-clips {
+  #sound-clips {
     flex: 1;
     overflow: auto;
   }
@@ -98,25 +122,6 @@
   .clip button {
     font-size: 1rem;
     float: right;
-  }
-  
-  button.delete {
-    background: #f00;
-    padding: 0.5rem 0.75rem;
-    font-size: 0.8rem;
-  }
-
-  button.download {
-    background: #66F;
-    padding: 0.5rem 0.75rem;
-    font-size: 0.8rem;
-  }
-
-  #reload {
-    display: none;
-  }
-  #reload.show {
-    display: block;
   }
   
   /* Checkbox hack to control information box display */

@@ -2,7 +2,9 @@
 This app uploads recordings to a target endpoint
 
 ## Features
+- Take picture of QR code
 - Audio recording (done)
+- Audio playback (done)
 - Offline (done)
 - Mobile friendly (done)
 - Upload to endpoint

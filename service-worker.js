@@ -1,11 +1,13 @@
 
 // Files to cache
 const cacheName = 'storybook-v1';
-const version = '0.0.2'
+const version = '0.0.3'
 const appShellFiles = [
   '/',
   '/index.html',
   '/app.js',
+  '/recorder.js',
+  '/visualizer.js',
   '/global.css',
   '/ELCLogo.png',
   '/manifest.json',
